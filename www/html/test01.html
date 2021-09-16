@@ -1,0 +1,41 @@
+<html>
+<head>
+<script src='ros.js'></script>
+<script type="text/javascript">
+var choice_robot="192.168.0.8";   // ip моего компа с ROS в сети
+var con = new Bridge("ws://192.168.0.8:9090");
+
+// получение данных
+var get_ros1=function(msg)
+  {
+  alert(msg);
+  document.getElementById("getdata1").value=msg;
+  }
+
+con.onOpen=function()
+  {
+  var cback=function(msg1) {JSON.stringify(msg1),get_ros1(msg1.data);}
+    con.subscribe(cback,'/web_subscriber1','std_msgs/String');
+  con.advertise('/web_publisher1', 'std_msgs/String');	
+  }
+//  отправка
+function send_ros1() {
+  con.publish('/web_publisher1', {'data':document.getElementById("putdata1").value});
+  }
+
+</script>
+</head>
+<body>
+<h2 id="start">Rosbridge example</h2>
+<h3 id="">Отправка - получение сообщений</h3>
+    <form id=formoptions name=formoptions action="javascript:void();" onsubmit="feturn false;">
+      
+ Получить из темы web_subscriber1 
+      <input name=getdata1 id=getdata1>
+      
+ Отправить в тему web_publisher12
+      <input  name=putdata1 id=putdata1>
+      <button id='button1' value='send' onclick='send_ros1();'>Отправить</button>
+    </form>
+</body>
+</html>

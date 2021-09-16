@@ -1,0 +1,6 @@
+gst-launch-1.0 v4l2src device="/dev/video1" ! videoconvert ! clockoverlay ! x264enc tune=zerolatency ! mpegtsmux ! hlssink playlist-root=http://192.168.0.40:8080 location=/var/www/html/segment_%05d.ts target-duration=5
+
+gst-launch-1.0 v4l2src device="/dev/video1" ! videoconvert ! clockoverlay ! xvimagesink
+
+gst-launch-1.0 -v v4l2src device="/dev/video1" ! videoconvert ! clockoverlay ! videoscale ! video/x-raw,width=640, height=360 !  x264enc bitrate=256 ! video/x-h264,profile=\"high\" ! mpegtsmux ! hlssink playlist-root=http://192.168.0.40:8080 location=segment_%05d.ts target-duration=5 max-files=5
+

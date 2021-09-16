@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+
+<script type="text/javascript" src="js/roslib.min.js"></script>
+<script type="text/javascript" type="text/javascript">
+  var ros = new ROSLIB.Ros({
+    url : 'ws://192.168.0.111:9090'
+  });
+
+  ros.on('connection', function() {
+    document.getElementById("status").innerHTML = "Connected";
+  });
+
+  ros.on('error', function(error) {
+    document.getElementById("status").innerHTML = "Error";
+  });
+
+  ros.on('close', function() {
+    document.getElementById("status").innerHTML = "Closed";
+  });
+
+ function send_ros() {
+    var msg=new ROSLIB.Message ({'data' : document.getElementById('putdata').value});
+    pub.publish(msg);
+ }
+
+var pub=new ROSLIB.Topic({
+     ros: ros,
+     name : '/pub_txt_msg',
+     messageType : 'std_msgs/String'  
+  });
+
+ 
+  var txt_listener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/sub_txt_msg',
+    messageType : 'std_msgs/String'
+  });
+
+  txt_listener.subscribe(function(m) {
+    document.getElementById("msg").innerHTML = m.data;
+  });
+  
+
+
+</script>
+</head>
+
+<body>
+  <h1>Simple ROS User Interface</h1>
+  <p>Connection status: <span id="status"></span></p>
+  <p>Last /txt_msg received: <span id="msg"></span></p>
+  <p><form id=formoptions name=formoptions action="javascript:void();" onsubmit="feturn false;">
+      send to /pub_txt_msg <br>
+      <input  name='putdata' id='putdata'>
+      <button id='button1' value='send' onclick='send_ros();'>Send</button>
+    </form>
+  </p>
+
+
+</body>
+</html>
