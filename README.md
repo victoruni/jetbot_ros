@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # jetbot_ros
 ROS nodes and Gazebo model for NVIDIA JetBot with Jetson Nano
 
@@ -220,4 +221,6 @@ A window should then open displaying the live video from the camera.  By default
 <img src="https://github.com/dusty-nv/jetbot_ros/raw/master/gazebo/jetbot_gazebo_0.png" width="700">
 
 See the [`gazebo`](gazebo) directory of the repo for instructions on loading the JetBot simulator model for Gazebo.
+=======
+>>>>>>> 621ef2d8fe07abe3f6e1f6fe9ce24d0756d6385e
 

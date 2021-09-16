@@ -4,14 +4,21 @@ import time
 import serial
 
 from std_msgs.msg import String, Int16
+<<<<<<< HEAD
 from geometry_msgs.msg import Twist
+=======
+
+>>>>>>> 621ef2d8fe07abe3f6e1f6fe9ce24d0756d6385e
 
 rospy.set_param("/jetbot_apriltag/goal",0)
 rospy.set_param("/jetbot_apriltag/sub_goal",0)
 serial_openmv=serial.Serial("/dev/ttyUSB0", 9600, timeout=1)
 
+<<<<<<< HEAD
 pub=rospy.Publisher("/jetbot_motors/cmd_raw",Twist)
 
+=======
+>>>>>>> 621ef2d8fe07abe3f6e1f6fe9ce24d0756d6385e
 def parsestring(data):
 	go=0
 	rospy.loginfo("data_serial = %s",data)  
@@ -25,6 +32,7 @@ def parsestring(data):
 	#rospy.loginfo(tags)  
 	#
 	goal= rospy.get_param("/jetbot_apriltag/goal") 
+<<<<<<< HEAD
 	for i in range(int(dd[0])):
 		rospy.loginfo('goal=%s',goal)
 		if goal==0:
@@ -39,11 +47,22 @@ def parsestring(data):
 				go=0
 				rospy.set_param("/jetbot_apriltag/goal",0)
 			i=int(dd[0])
+=======
+	sub_goal= rospy.get_param("/jetbot_apriltag/sub_goal") 
+	for i in range(int(dd[0])):
+		if goal==0:
+			go=0
+		elif tags[i][j%5]==goal:
+			go=2
+		elif tags[i][j%5]==sub_goal:
+			go=3
+>>>>>>> 621ef2d8fe07abe3f6e1f6fe9ce24d0756d6385e
 		#elif tags[i][j%5]==sub_goal:
 		#	go=3
 		else:   # 
 			go=4
 	rospy.loginfo('go=%s',go)  
+<<<<<<< HEAD
 	######
 	if go==4:
 		msg=Twist()
@@ -72,6 +91,8 @@ def parsestring(data):
 		msg.angular.y=0.0;
 		msg.angular.z=0.0;
 		pub.publish(msg)
+=======
+>>>>>>> 621ef2d8fe07abe3f6e1f6fe9ce24d0756d6385e
 	
 	pass
 
